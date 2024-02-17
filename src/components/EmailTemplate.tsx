@@ -1,0 +1,21 @@
+type EmailTemplateProps = {
+  username: string;
+  email: string;
+  content: string;
+};
+
+const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
+  username,
+  email,
+  content,
+}) => {
+  return (
+    <div>
+      <h1>こんにちは、{username}です。</h1>
+      <p>{email}から届きました。</p>
+      <p>{content}</p>
+    </div>
+  );
+};
+
+export default EmailTemplate;

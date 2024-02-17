@@ -1,0 +1,13 @@
+import MailForm from '@/components/MailForm/MailForm';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import Image from 'next/image';
+
+export default function Home() {
+  return (
+    <main className="flex min-h-screen flex-col items-center p-24">
+      <h1 className=' font-semibold text-2xl mb-4'>お問い合わせフォーム</h1>
+      <MailForm/>
+    </main>
+  );
+}

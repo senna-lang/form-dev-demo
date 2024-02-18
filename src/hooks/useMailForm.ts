@@ -11,13 +11,20 @@ export const useMailForm = () => {
       subject: '',
       email: '',
       content: '',
+      file: undefined,
     },
   });
 
-  const onSubmit = useCallback((values: any) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const onSubmit = useCallback(async (values: any) => {
+    const { username, subject, email, content,file } = values;
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/send`, {
+        method: 'POST',
+        body: JSON.stringify({ username, subject, email, content }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return { form, onSubmit };

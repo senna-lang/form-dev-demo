@@ -84,6 +84,9 @@ const MailForm = () => {
                   type="file"
                   accept="image/*"
                   placeholder="image"
+                  onChange={e => {
+                    onChange(e.target.files);
+                  }}
                   {...fieldProps}
                 />
               </FormControl>

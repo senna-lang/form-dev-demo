@@ -29,3 +29,25 @@ export const formSchema = z.object({
       '.jpeg,.jpg,.png.,webpのファイルのみ利用できます。'
     ),
 });
+
+export const signupFormSchema = z.object({
+  username: z.string().min(2, { message: '２文字以上で入力してください。' }),
+  email: z.string().email({ message: '無効なメールアドレスです。' }),
+  password: z
+    .string()
+    .min(8, 'パスワードは8文字以上で入力してください')
+    .regex(
+      /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}$/i,
+      'パスワードは半角英数字混合で入力してください'
+    ),
+});
+export const loginFormSchema = z.object({
+  email: z.string().email({ message: '無効なメールアドレスです。' }),
+  password: z
+    .string()
+    .min(8, 'パスワードは8文字以上で入力してください')
+    .regex(
+      /^(?=.*?[a-z])(?=.*?\d)[a-z\d]{8,100}$/i,
+      'パスワードは半角英数字混合で入力してください'
+    ),
+});

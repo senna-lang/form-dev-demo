@@ -19,7 +19,9 @@ const MailForm = () => {
   const { form, onSubmit } = useMailForm();
 
   useEffect(() => {
-    toast.success('メール送信完了');
+    if (form.formState.isSubmitSuccessful) {
+      toast.success('メール送信完了');
+    }
   }, [form.formState.isSubmitSuccessful]);
 
   return (
@@ -103,7 +105,7 @@ const MailForm = () => {
           )}
         />
         <Button type="submit" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting ? '送信完了' : '送信中'}
+          {form.formState.isSubmitting ? '送信中' : '送信'}
         </Button>
       </form>
     </Form>

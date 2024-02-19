@@ -11,12 +11,20 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
+import { ToastContainer, toast } from 'react-toastify';
+import { useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MailForm = () => {
   const { form, onSubmit } = useMailForm();
 
+  useEffect(() => {
+    toast.success('メール送信完了');
+  }, [form.formState.isSubmitSuccessful]);
+
   return (
     <Form {...form}>
+      <ToastContainer />
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="container flex flex-col gap-3"
@@ -94,7 +102,9 @@ const MailForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? '送信完了' : '送信中'}
+        </Button>
       </form>
     </Form>
   );

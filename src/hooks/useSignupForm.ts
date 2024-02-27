@@ -1,6 +1,7 @@
-'use client'
+'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupFormSchema } from '@/lib/formSchema';
@@ -9,6 +10,7 @@ import { z } from 'zod';
 import { supabase } from '@/lib/supabaseClient';
 
 export const useLogoutForm = () => {
+  const [error, setError] = useState<string>('');
   const router = useRouter();
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
@@ -24,13 +26,29 @@ export const useLogoutForm = () => {
       const { username, email, password } = data;
 
       try {
-        const { data, error } = await supabase.auth.signUp({
+        const { data, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
         });
-        if (error) {
-          throw error;
+        if (signUpError) {
+          throw signUpError;
         }
+
+        const { error: userError } = await supabase
+          .from('form-demo-auth')
+          .insert([{ id: data.user?.id, username, email }]);
+
+        if (userError) {
+          if (
+            userError.message.includes(
+              'duplicate key value violates unique constraint'
+            )
+          ) {
+            setError('このユーザーネームはすでに使用されています。');
+          }
+          return;
+        }
+
         router.push('/login');
       } catch (err) {
         if (err instanceof Error) {
@@ -41,5 +59,5 @@ export const useLogoutForm = () => {
     []
   );
 
-  return { form, onSubmit };
+  return { form, onSubmit, error };
 };

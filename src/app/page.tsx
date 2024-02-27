@@ -8,7 +8,7 @@ export default function Home() {
       <h2 className='text-xl '>RHF & ZOD</h2>
       <MailForm/>
       <div className='mt-3'>
-        <Link href='/auth'>ログインページへ</Link>
+        <Link href='/login'>ログインページへ</Link>
       </div>
     </main>
   );

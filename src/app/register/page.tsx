@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import LogoutForm from '@/components/AuthForm/LogoutForm';
+import LogoutForm from '@/components/AuthForm/RegisterForm';
 
 const Register = () => {
   return (

@@ -1,10 +1,14 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema } from '@/lib/formSchema';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { z } from 'zod';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 
 export const useLoginForm = () => {
+  const [error, setError] = useState('');
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -16,14 +20,20 @@ export const useLoginForm = () => {
   const onSubmit: SubmitHandler<z.infer<typeof loginFormSchema>> = useCallback(
     async data => {
       const { email, password } = data;
-
       try {
-        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/send`, {
-          method: 'POST',
-          body: JSON.stringify({ email, password }),
-        });
-      } catch (err) {
-        console.log(err);
+        const { data, error: signUpError } =
+          await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+        if (signUpError) {
+          throw signUpError;
+        }
+        router.push('/login');
+      } catch (err){
+        if (err instanceof Error) {
+          console.log(err.message);
+        }
       }
     },
     []

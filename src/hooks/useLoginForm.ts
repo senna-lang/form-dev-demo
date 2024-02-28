@@ -21,16 +21,22 @@ export const useLoginForm = () => {
     async data => {
       const { email, password } = data;
       try {
-        const { data, error: signUpError } =
+        const { data, error: signInError } =
           await supabase.auth.signInWithPassword({
             email,
             password,
           });
-        if (signUpError) {
-          throw signUpError;
+        if (signInError) {
+          if (signInError.message.includes('Email not confirmed')) {
+            setError('emailの認証が完了していません。');
+          }
+          if (signInError.message.includes('Invalid login credentials')) {
+            setError('メールアドレスが間違っています。');
+          }
+          return;
         }
-        router.push('/login');
-      } catch (err){
+        router.push('/');
+      } catch (err) {
         if (err instanceof Error) {
           console.log(err.message);
         }
@@ -39,5 +45,5 @@ export const useLoginForm = () => {
     []
   );
 
-  return { form, onSubmit };
+  return { form, onSubmit, error };
 };

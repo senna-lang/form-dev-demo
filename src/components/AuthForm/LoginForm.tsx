@@ -15,10 +15,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = () => {
-  const { form, onSubmit } = useLoginForm();
+  const { form, onSubmit ,error} = useLoginForm();
 
   return (
     <div className="rounded-md bg-slate-300 p-12 w-1/3 ">
+      <p className=' text-center text-red-500'>{error}</p>
       <Form {...form}>
         <ToastContainer />
         <form

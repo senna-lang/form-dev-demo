@@ -49,7 +49,7 @@ export const useLogoutForm = () => {
           return;
         }
 
-        router.push('/login');
+        router.push('/email-confirm');
       } catch (err) {
         if (err instanceof Error) {
           console.log(err.message);

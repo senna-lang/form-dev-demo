@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema } from '@/lib/formSchema';
 import { useCallback } from 'react';
 import { z } from 'zod';
+import { sendMailForm } from '@/actions/actions';
 
 export const useMailForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -26,14 +27,7 @@ export const useMailForm = () => {
       formData.append('content', content);
       formData.append('file', file[0]);
 
-      try {
-        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/send`, {
-          method: 'POST',
-          body: formData,
-        });
-      } catch (err) {
-        console.log(err);
-      }
+      sendMailForm(formData);
     },
     []
   );

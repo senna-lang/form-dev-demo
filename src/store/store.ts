@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 type State = {
-  username: string;
-  email: string;
+  username: string | null;
+  email: string | null;
 };
 type Action = {
   updateUserName: (username: State['username']) => void;
@@ -10,8 +10,8 @@ type Action = {
 };
 
 export const useStore = create<Action & State>(set => ({
-  username: '',
-  email: '',
+  username: null,
+  email: null,
   updateEmail: email => set(() => ({ email: email })),
   updateUserName: username => set(() => ({ username: username })),
 }));

@@ -10,7 +10,6 @@ export const useUserSession = () => {
   const router = useRouter();
   const updateEmail = useStore(state => state.updateEmail);
   const updateUserName = useStore(state => state.updateUserName);
-
   const [session, setSession] = useState<Session | null>();
 
   useEffect(() => {
@@ -21,8 +20,8 @@ export const useUserSession = () => {
           updateEmail(session?.user.email!);
           updateUserName(session?.user.id!);
         } else if (event === 'SIGNED_OUT') {
-          updateEmail('');
-          updateUserName('');
+          updateEmail(null);
+          updateUserName(null);
         }
       }
     );

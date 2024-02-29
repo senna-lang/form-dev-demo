@@ -12,7 +12,6 @@ export const useUserSession = () => {
   const updateUserName = useStore(state => state.updateUserName);
 
   const [session, setSession] = useState<Session | null>();
-  console.log(session);
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(

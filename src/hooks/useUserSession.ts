@@ -7,8 +7,6 @@ import { useRouter } from 'next/navigation';
 export const useUserSession = () => {
   const router = useRouter();
   const updateSession = useStore(state => state.updateSession);
-  const session = useStore(state => state.session)
-  console .log(session)
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(

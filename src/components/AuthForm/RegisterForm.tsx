@@ -1,5 +1,5 @@
 'use client';
-import { useLogoutForm } from '@/lib/useSignupForm';
+import { useLogoutForm } from '@/hooks/useSignupForm';
 import { Button } from '../ui/button';
 import {
   Form,

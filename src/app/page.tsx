@@ -1,5 +1,5 @@
 import MailForm from '@/components/MailForm/MailForm';
-import AuthStatus from '@/components/MailForm/authStatus';
+import AuthStatus from '@/components/MailForm/AuthStatus';
 
 export default async function Home() {
   return (

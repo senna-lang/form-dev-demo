@@ -2,26 +2,21 @@
 import { useStore } from '@/store/store';
 import { supabase } from '../lib/supabaseClient';
 import { useEffect } from 'react';
-import { useState } from 'react';
-import { Session } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 
 export const useUserSession = () => {
   const router = useRouter();
-  const updateEmail = useStore(state => state.updateEmail);
-  const updateUserName = useStore(state => state.updateUserName);
-  const [session, setSession] = useState<Session | null>();
+  const updateSession = useStore(state => state.updateSession);
+  const session = useStore(state => state.session)
+  console .log(session)
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        setSession(session);
         if (event === 'SIGNED_IN') {
-          updateEmail(session?.user.email!);
-          updateUserName(session?.user.id!);
+          updateSession(session);
         } else if (event === 'SIGNED_OUT') {
-          updateEmail(null);
-          updateUserName(null);
+          updateSession(null);
         }
       }
     );
@@ -37,7 +32,6 @@ export const useUserSession = () => {
   };
 
   return {
-    session,
     logout,
   };
 };

@@ -3,9 +3,11 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { useUserSession } from '@/hooks/useUserSession';
+import { useStore } from '@/store/store';
 
 const AuthStatus = () => {
-  const { session, logout } = useUserSession();
+  const { logout } = useUserSession();
+  const session = useStore(state => state.session);
   return (
     <div>
       {session !== null ? (

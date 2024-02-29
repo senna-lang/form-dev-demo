@@ -1,17 +1,14 @@
+import { Session } from '@supabase/supabase-js';
 import { create } from 'zustand';
 
 type State = {
-  username: string | null;
-  email: string | null;
+  session: Session | null;
 };
 type Action = {
-  updateUserName: (username: State['username']) => void;
-  updateEmail: (email: State['email']) => void;
+  updateSession: (username: State['session']) => void;
 };
 
 export const useStore = create<Action & State>(set => ({
-  username: null,
-  email: null,
-  updateEmail: email => set(() => ({ email: email })),
-  updateUserName: username => set(() => ({ username: username })),
+  session: null,
+  updateSession: session => set(() => ({ session: session })),
 }));
